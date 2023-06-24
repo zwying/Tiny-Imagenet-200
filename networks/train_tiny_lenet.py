@@ -58,12 +58,15 @@ def train_tiny_imagenet(hardware='cpu', batch_size=100, num_epochs=25,
 				model = Sequential()
 
 				"""Block 1"""
+				print(x_train.shape[1:])
 				model.add(Conv2D(32, (5, 5), strides=(1,1), padding='same', 
 						  kernel_initializer=initializers.random_uniform(minval=-0.01, maxval=0.01),
 						  bias_initializer='zeros',
 						  input_shape=x_train.shape[1:]))
 				model.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding='same'))
 				model.add(Activation('relu'))
+				print(model.layers[-1].output_shape)
+
 				
 				"""Block 2"""
 				model.add(Conv2D(32, (5, 5), strides=(1,1), padding='same',
@@ -71,6 +74,7 @@ def train_tiny_imagenet(hardware='cpu', batch_size=100, num_epochs=25,
 						  bias_initializer='zeros'))
 				model.add(Activation('relu'))
 				model.add(AveragePooling2D(pool_size=(3, 3), strides=(2, 2), padding='same'))
+				print(model.layers[-1].output_shape)
 				
 				"""Block 3"""
 				model.add(Conv2D(64, (5, 5), strides=(1,1), padding='same',
@@ -78,15 +82,20 @@ def train_tiny_imagenet(hardware='cpu', batch_size=100, num_epochs=25,
 						  bias_initializer='zeros'))
 				model.add(Activation('relu'))
 				model.add(AveragePooling2D(pool_size=(3, 3), strides=(2, 2), padding='same'))
+				print(model.layers[-1].output_shape)
+
 
 				"""Fully Connected Layer and ReLU"""
 				model.add(Flatten())
 				model.add(Activation('relu'))
+				print(model.layers[-1].output_shape)
 				
 				"""Output Layer"""
 				model.add(Dense(num_classes,
 						  kernel_initializer=initializers.random_uniform(minval=-0.05, maxval=0.05),
 						  bias_initializer='zeros'))
+
+				print(model.layers[-1].output_shape)
 
 				"""Loss Layer"""
 				model.add(Activation('softmax'))
