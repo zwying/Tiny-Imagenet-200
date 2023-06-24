@@ -8,7 +8,7 @@ import os
 import pickle
 import scipy.misc
 import numpy as np
-from scipy.misc import imread
+from matplotlib.pyplot import imread
 
 def load_CIFAR_batch(filename):
   """ load single batch of cifar """
